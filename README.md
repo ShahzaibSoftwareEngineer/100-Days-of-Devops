@@ -80,5 +80,3 @@ This setup ensures a smooth foundation for testing and production-ready containe
 
 ```
 
-
-```
