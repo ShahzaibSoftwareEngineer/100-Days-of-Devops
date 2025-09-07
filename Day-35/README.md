@@ -16,43 +16,56 @@ Docker installation and service setup for App Server 1 as part of containerizing
 ## ⚡ Step-by-Step Commands
 
 ### 1. Connect to App Server 1
+
 ```bash
+
 ssh tony@172.16.238.10
 # password: Ir0nM@n
+
 ````
 
 ### 2. Update packages
 
 ```bash
+
 sudo yum update -y
+
 ```
 
 ### 3. Install Docker prerequisites
 
 ```bash
+
 sudo yum install -y yum-utils
 sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+
 ```
 
 ### 4. Install Docker CE and Docker Compose
 
 ```bash
+
 sudo yum install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin
+
 ```
 
 ### 5. Start and enable Docker service
 
 ```bash
+
 sudo systemctl start docker
 sudo systemctl enable docker
+
 ```
 
 ### 6. Verify installation
 
 ```bash
+
 sudo systemctl status docker
 docker --version
 docker compose version
+
 ```
 
 ---
@@ -72,8 +85,5 @@ docker compose version
 
 ---
 
-✅ **Task Completed:** Yes
-💡 **Reflection:** The server is now fully configured with Docker and Docker Compose.
-It is ready to run containerized applications and support application deployment workflows.
-This setup ensures a smooth foundation for testing and production-ready containerization.
+
 
