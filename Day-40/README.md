@@ -6,7 +6,7 @@ It allows us to **run processes inside a running container** without stopping or
 
 ---
 
-## 📖 Theory: Understanding `docker exec`
+## 📖  Understanding `docker exec`
 
 * **Purpose**: The `docker exec` command lets us execute a new command in an already running container.
 * **Difference from `docker run`**:
