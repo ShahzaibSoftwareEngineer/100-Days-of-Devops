@@ -108,26 +108,22 @@ You should see the **Apache default page HTML**, confirming Apache is running on
 
 ## Dockerfile Best Practices Applied
 
-• Used official Ubuntu base image
-• Combined `RUN` commands to reduce image layers
-• Set `ENV DEBIAN_FRONTEND=noninteractive` to avoid prompts
-• Cleaned apt cache to reduce image size
-• Exposed port 8084 properly
+• Used official Ubuntu base image  
+• Combined `RUN` commands to reduce image layers  
+• Set `ENV DEBIAN_FRONTEND=noninteractive` to avoid prompts  
+• Cleaned apt cache to reduce image size  
+• Exposed port 8084 properly  
 • Ran Apache in foreground for container-friendly execution
 
 ---
 
 ## Key Learnings
 
-• Dockerfiles act as blueprints for reproducible environments
-• Using official base images improves security and reliability
-• Combining `RUN` commands reduces image layers
-• Cleaning apt cache keeps image size small
-• Exposing ports properly documents container networking
-• Running services in foreground ensures container stability
-• Following best practices ensures images are efficient, secure, and maintainable
+• Dockerfiles act as blueprints for reproducible environments  
+• Using official base images improves security and reliability  
+• Combining `RUN` commands reduces image layers  
+• Cleaning apt cache keeps image size small  
+• Exposing ports properly documents container networking  
+• Running services in foreground ensures container stability  
+• Following best practices ensures images are efficient, secure, and maintainable  
 • Well-written Dockerfiles are essential for scalable DevOps pipelines
-
----
-
-
