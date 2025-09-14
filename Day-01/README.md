@@ -1,55 +1,86 @@
-Got it ✅ You’re on branch **`rename-folders`**, but you tried to push to **`main`**.
-Also, GitHub says your local repo is **behind** `main`, so it rejected the push.
+# 🚀 Day 1 of 100 Days of DevOps: Mastering Linux User Security
+
+## 🎯 **Lab Overview**
+**Objective:** Create a non-interactive user account on App Server 1 for secure system process management  
+**Environment:** Nautilus App Server 1 (stapp01)  
+**User:** tony | **Target User:** james
 
 ---
 
-### Fix Step by Step (PowerShell)
+## 🔍 **Key Concepts**
 
-1. **Make sure you’re on the right branch:**
+### **Non-Interactive Shell (`/sbin/nologin`)**
+- Prevents interactive login while allowing process execution
+- Used for service accounts, backup agents, and automated processes
+- Implements principle of least privilege for enhanced security
 
-```powershell
-git branch
+### **Why Important in DevOps?**
+- **Security:** Reduces attack surface by preventing unauthorized shell access
+- **Automation:** Enables secure automated processes without login capabilities
+- **Compliance:** Meets enterprise security requirements for service accounts
+
+---
+
+## 🛠️ **Implementation Steps**
+
+### **Step 1: Connect to Server**
+```bash
+ssh tony@stapp01
 ```
 
-If you see `* rename-folders`, you’re not on `main`.
-
-2. **Switch to main:**
-
-```powershell
-git checkout main
+### **Step 2: Create Non-Interactive User**
+```bash
+sudo useradd -s /sbin/nologin james
 ```
 
-3. **Pull latest changes from GitHub main:**
+**Command Breakdown:**
+- `useradd`: Creates new user account
+- `-s /sbin/nologin`: Sets non-interactive shell
+- `james`: Username for new account
 
-```powershell
-git pull origin main
+### **Step 3: Verify User Creation**
+```bash
+grep james /etc/passwd
 ```
 
-4. **Merge your changes from `rename-folders` into `main`:**
-
-```powershell
-git merge rename-folders
+**Expected Output:**
+```
+james:x:1002:1002::/home/james:/sbin/nologin
 ```
 
-5. **Push to GitHub:**
-
-```powershell
-git push origin main
+### **Step 4: Exit Server**
+```bash
+exit
 ```
 
 ---
 
-### Alternative (if you want to push `rename-folders` as a PR):
+## ✅ **Validation Testing**
 
-If you **don’t want to merge locally** and instead open a **Pull Request** on GitHub:
-
-```powershell
-git push origin rename-folders
+### **Security Test (Should Fail)**
+```bash
+su - james
+# Expected: "This account is currently not available."
 ```
 
-Then go to your repo → GitHub will show a **Compare & Pull Request** button.
+### **Process Test (Should Work)**
+```bash
+sudo -u james whoami
+# Expected: "james"
+```
+
+## 🔧 **Skills Practiced**
+- Linux user management commands
+- SSH remote server access
+- Security hardening principles
+- System authentication configuration
 
 ---
 
-👉 Do you want to **merge directly into main locally** (first method),
-or do you prefer to **create a PR on GitHub** (second method)?
+## 💡 **Key Takeaways**
+- Non-interactive shells provide security without breaking functionality
+- Service accounts should always use restricted shell access
+- Proper user management is fundamental to DevOps security
+- This pattern scales across containerized and cloud environments
+
+---
