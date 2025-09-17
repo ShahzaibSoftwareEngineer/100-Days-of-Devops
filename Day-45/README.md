@@ -1,4 +1,4 @@
-# 🐳 Day 45: Resolve Dockerfile Issues - Complete Lab Walkthrough
+# Day 45 of #100DaysOfDevOp - Resolve Dockerfile Issues 
 
 
 ### What is a Dockerfile?
