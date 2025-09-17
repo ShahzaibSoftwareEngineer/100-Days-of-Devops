@@ -1,5 +1,4 @@
-# 🐳 Day 44:  Write a Docker Compose File
-
+## Day 44 of #100DaysOfDevOps — Write a Docker Compose File
 ## 📋 Lab Overview
 Deploy a static website using Apache HTTP server with Docker Compose on App Server 3.
 
