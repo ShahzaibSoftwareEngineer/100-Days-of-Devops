@@ -1,97 +1,75 @@
-🚀 Day 2 of #100DaysOfDevOps — Temporary User Setup with Expiry
+# 🚀 Day 2 of 100 Days of DevOps: Temporary User Management
 
+## 🎯 Challenge: 100 Days of DevOps with KodeKloud
 
-
-## 🎯 **Lab Overview**
-**Objective:** Create a temporary user account with automatic expiry date  
-**Environment:** Nautilus App Server 1 (stapp01)  
-**User:** tony | **Target User:** john  
-**Expiry Date:** March 28, 2024
-
----
-
-## 🔍 **Key Concepts**
-
-### **Temporary User Accounts**
-- Automatically expire after specified date
-- Used for contractors, interns, or temporary project access
-- Improves security by preventing forgotten active accounts
-
-### **Why Important in DevOps?**
-- **Security:** Automatic access revocation without manual intervention
-- **Compliance:** Meets audit requirements for time-limited access
-- **Risk Management:** Prevents orphaned accounts in production systems
+## 🖥️ Server Details
+| Server Name | IP Address | Hostname | User | Purpose |
+|-------------|------------|----------|------|---------|
+| stapp03 | 172.16.238.12 | stapp03.stratos.xfusioncorp.com | banner | Nautilus App 3 |
 
 ---
 
-## 🛠️ **Implementation Steps**
+## 📋 Lab Overview
+**Scenario:** A developer named `kareem` requires temporary access to the Nautilus project for a limited duration.
 
-### **Step 1: Connect to Server**
+**Objective:** Create a user named `kareem` on App Server 3 with expiry date set to `2024-01-28`.
+
+---
+
+## 🔧 Step-by-Step Solution
+
+### Step 1: Connect to App Server 3
 ```bash
-ssh tony@stapp01.stratos.xfusioncorp.com
+# SSH into App Server 3 (stapp03 - Nautilus App 3)
+ssh banner@stapp03.stratos.xfusioncorp.com
+# OR using IP address
+ssh banner@172.16.238.12
+
+# Enter password when prompted: BigGr33n
 ```
 
-### **Step 2: Create User with Expiry Date**
+### Step 2: Switch to Root User
 ```bash
-sudo useradd -e 2024-03-28 john
+# Switch to root for user management operations
+sudo su -
 ```
 
-**Command Breakdown:**
-- `useradd`: Creates new user account
-- `-e 2024-03-28`: Sets account expiry date (YYYY-MM-DD format)
-- `john`: Username for temporary account
-
-### **Step 3: Verify User Creation**
+### Step 3: Create User with Expiry Date
 ```bash
-id john
+# Create user 'kareem' with expiry date 2024-01-28
+useradd -e 2024-01-28 kareem
 ```
 
-**Expected Output:**
-```
-uid=1003(john) gid=1003(john) groups=1003(john)
-```
-
-### **Step 4: Check Expiry Details**
+**Alternative command options:**
 ```bash
-sudo chage -l john
+# Using different date format
+useradd --expiredate 2024-01-28 kareem
+
+# Create user first, then set expiry
+useradd kareem
+chage -E 2024-01-28 kareem
 ```
 
-**Key Output:**
-```
-Account expires: Mar 28, 2024
-```
-
-### **Step 5: Test Account Access**
+### Step 4: Verify User Creation and Expiry
 ```bash
-su - john
+# Check if user was created successfully
+id kareem
+
+# Verify user entry in passwd file
+grep kareem /etc/passwd
+
+# Check user's expiry date
+chage -l kareem
+
+# Alternative method to check expiry
+passwd -S kareem
 ```
 
 ---
 
-## ✅ **Validation Testing**
+## ✅ Validation Steps
 
-### **Verify Expiry Configuration**
-```bash
-# Check user in password database
-grep john /etc/passwd
-
-# View account expiry timestamp
-sudo grep john /etc/shadow | cut -d: -f8
-```
-
-### **Post-Expiry Behavior**
-After March 28, 2024, login attempts will fail with:
-```
-Your account has expired; please contact your system administrator
-```
-
-## 🔧 **Skills Practiced**
-- Linux user lifecycle management
-- Account expiry policy implementation
-- System security automation
-- Compliance-driven access control
-
----
-
-
-*Critical skill for implementing secure, time-bound user access in DevOps environments.*
+1. ✅ User `kareem` created successfully
+2. ✅ User expiry date set to `2024-01-28`
+3. ✅ User entry exists in `/etc/passwd`
+4. ✅ User created in lowercase as per protocol
