@@ -64,15 +64,6 @@ ls -la /home/ | grep javed
 
 ---
 
-#
-
-### useradd Command Options
-- `-s` : Specify the login shell
-- `-d` : Set home directory
-- `-m` : Create home directory
-- `-g` : Set primary group
-
----
 
 
 ## ✅ Validation Steps
