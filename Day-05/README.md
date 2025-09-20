@@ -1,12 +1,12 @@
-P
+# 🚀 Day 5 of 100 Days of DevOps: SELinux Installation and Configuration
 
-# 📘 Day 5: SELinux Installation and Configuration
+## 🎯 Challenge: 100 Days of DevOps with KodeKloud
 
-Today, I worked on **Security-Enhanced Linux (SELinux)** — a security architecture for Linux systems developed by the **NSA (National Security Agency)**. SELinux is a kernel security module that provides **Mandatory Access Control (MAC)** in addition to the traditional **Discretionary Access Control (DAC)**.
+## 🖥️ Server Details
+| Server Name | IP Address | Hostname | User | Purpose |
+|---
 
----
-
-## 🔹 SELinux 
+## 🔹 SELinux Overview
 
 * **What is SELinux?**
   SELinux is a Linux kernel security module that enforces security policies using **labels** on files, processes, and ports.
@@ -14,119 +14,93 @@ Today, I worked on **Security-Enhanced Linux (SELinux)** — a security architec
 * **Why SELinux?**
   Traditional Linux permissions (user, group, others) are not enough for advanced security. SELinux prevents processes from doing things they are not explicitly allowed to, even if the standard permissions allow it.
 
-* **Modes of SELinux**:
-
-  1. **Enforcing** → Default mode, SELinux policy is applied, violations are blocked.
-  2. **Permissive** → SELinux logs violations but does not block them (useful for troubleshooting).
-  3. **Disabled** → SELinux completely turned off (not recommended).
-
-* **Policy Types**:
-
-  * **Targeted policy (default)** → Applies rules to specific targeted services (like Apache, SSH).
-  * **MLS policy** → Multi-Level Security for very high-security environments.
-
-* **SELinux Context**:
-  Every file, process, and port is labeled with a **context** (user\:role\:type\:level). Example:
-
-  ```
-  system_u:object_r:httpd_sys_content_t:s0
-  ```
-
-  Here `httpd_sys_content_t` defines what Apache can access.
+-------------|------------|----------|------|---------|
+| stapp02 | 172.16.238.11 | stapp02.stratos.xfusioncorp.com | steve | Nautilus App 2 |
 
 ---
 
-## ⚙️ Lab – SELinux Installation and Configuration
+## 📋 Lab Overview
+**Scenario:** xFusionCorp Industries security team has opted to enhance application and server security with SELinux following a security audit.
 
-### 🔹 Step 1: Check SELinux status
+**Objective:** Install SELinux packages and permanently disable SELinux on App Server 2 for testing purposes.
 
+---
+
+## 🔧 Step-by-Step Solution
+
+### Step 1: Connect to App Server 2
 ```bash
+# SSH into App Server 2 (stapp02 - Nautilus App 2)
+ssh steve@stapp02.stratos.xfusioncorp.com
+# OR using IP address
+ssh steve@172.16.238.11
+```
+
+### Step 2: Switch to Root User
+```bash
+# Switch to root for SELinux management
+sudo su -
+```
+
+### Step 3: Check Current SELinux Status
+```bash
+# Check current SELinux status
 sestatus
+
+# Alternative command to check status
 getenforce
 ```
 
-### 🔹 Step 2: Install SELinux (if not installed)
-
-For **RHEL/CentOS**:
-
+### Step 4: Install SELinux Packages
 ```bash
-sudo yum install selinux-policy selinux-policy-targeted policycoreutils -y
+# Install required SELinux packages
+yum install -y policycoreutils policycoreutils-python selinux-policy selinux-policy-targeted libselinux-utils setroubleshoot-server setools setools-console mcstrans
+
+# Alternative for newer systems
+dnf install -y policycoreutils policycoreutils-python-utils selinux-policy selinux-policy-targeted libselinux-utils setroubleshoot-server setools setools-console mcstrans
 ```
 
-For **Ubuntu/Debian**:
-
+### Step 5: Permanently Disable SELinux
 ```bash
-sudo apt install selinux selinux-basics selinux-policy-default auditd -y
+# Edit SELinux configuration file
+vi /etc/selinux/config
+
+# Change SELINUX=enforcing to SELINUX=disabled
+# The file should contain: SELINUX=disabled
 ```
 
-### 🔹 Step 3: Enable SELinux at Boot
-
-Edit the config file:
-
+### Step 6: Alternative Method to Disable SELinux
 ```bash
-sudo vi /etc/selinux/config
+# Use sed command to change configuration
+sed -i 's/^SELINUX=enforcing$/SELINUX=disabled/' /etc/selinux/config
+
+# Or use this command
+sed -i 's/^SELINUX=permissive$/SELINUX=disabled/' /etc/selinux/config
 ```
 
-Set:
-
-```
-SELINUX=enforcing
-SELINUXTYPE=targeted
-```
-
-### 🔹 Step 4: Switch Modes (Temporary)
-
+### Step 7: Verify Configuration Changes
 ```bash
-sudo setenforce 1   # Enforcing
-sudo setenforce 0   # Permissive
+# Check the SELinux configuration file
+cat /etc/selinux/config
+
+# Verify the SELINUX parameter is set to disabled
+grep "SELINUX=disabled" /etc/selinux/config
 ```
 
-### 🔹 Step 5: View Loaded Policies
-
+### Step 8: Check Current Runtime Status (Optional)
 ```bash
-semodule -l
-```
+# Check current runtime status (will show current state)
+sestatus
 
-### 🔹 Step 6: Check File Contexts
-
-```bash
-ls -Z /var/www/html/
-```
-
-### 🔹 Step 7: Restore Default SELinux Context
-
-```bash
-sudo restorecon -Rv /var/www/html/
-```
-
-### 🔹 Step 8: Manage Ports in SELinux
-
-```bash
-# List SELinux ports
-semanage port -l | grep http
-
-# Allow Apache on custom port 8080
-sudo semanage port -a -t http_port_t -p tcp 8080
-```
-
-### 🔹 Step 9: Troubleshooting with Audit Logs
-
-```bash
-# View SELinux denied actions
-sudo ausearch -m avc --success no | less
-
-# Generate human-readable report
-sudo sealert -a /var/log/audit/audit.log
+# Check enforcement mode
+getenforce
 ```
 
 ---
 
-## 📝 Summary
+## ✅ Validation Steps
 
-* SELinux adds a **powerful security layer** by controlling access at the kernel level.
-* It works using **labels (contexts)** and **policies** to enforce strict access rules.
-* Modes: **Enforcing (active), Permissive (logs only), Disabled (off)**.
-* Tools like `sestatus`, `semanage`, `restorecon`, and `audit2allow` are key in managing SELinux.
-* Best practice: Always run SELinux in **Enforcing mode** in production systems.
-
-
+1. ✅ SELinux packages installed successfully
+2. ✅ SELinux configuration file modified (/etc/selinux/config)
+3. ✅ SELINUX parameter set to 'disabled'
+4. ✅ Configuration will take effect after scheduled reboot
