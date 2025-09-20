@@ -2,7 +2,6 @@
 
 ## 🎯 Challenge: 100 Days of DevOps with KodeKloud
 
-
 ## 🖥️ Server Details
 | Server Name | IP Address | Hostname | User | Purpose |
 |-------------|------------|----------|------|---------|
@@ -60,11 +59,9 @@ grep javed /etc/passwd
 
 # Check user's home directory
 ls -la /home/ | grep javed
-```)
+```
 
 ---
-
-
 
 ## ✅ Validation Steps
 
@@ -72,5 +69,3 @@ ls -la /home/ | grep javed
 2. ✅ User has non-interactive shell (`/sbin/nologin`)
 3. ✅ User entry exists in `/etc/passwd`
 4. ✅ User cannot login interactively
-
-
