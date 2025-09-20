@@ -1,85 +1,199 @@
+# 🚀 Day 6 of 100 Days of DevOps: Create a Cron Job
 
+## 🎯 Challenge: 100 Days of DevOps with KodeKloud
 
-# 🔹 Day 6 of 100 Days of DevOps – KodeKloud Challenge | Create a Cron Job ⏰
-
-## 📘 What is a Cron Job?
-
-A **Cron Job** is a scheduled task in Linux that runs automatically at specified intervals.
-
-* Managed by the **cron daemon (`crond`)**.
-* Configured through the **crontab file**.
-* Commonly used for **backups, monitoring, log rotation, and automation in DevOps pipelines**.
+## 🖥️ Server Details
+| Server Name | IP Address | Hostname | User | Purpose |
+|-------------|------------|----------|------|---------|
+| stapp01 | 172.16.238.10 | stapp01.stratos.xfusioncorp.com | tony | Nautilus App 1 |
+| stapp02 | 172.16.238.11 | stapp02.stratos.xfusioncorp.com | steve | Nautilus App 2 |
+| stapp03 | 172.16.238.12 | stapp03.stratos.xfusioncorp.com | banner | Nautilus App 3 |
 
 ---
 
-## ✅ Steps Completed
+## 📋 Lab Overview
+**Scenario:** Nautilus system admins team has prepared scripts to automate day-to-day tasks and wants to deploy them on a set schedule.
 
-### 1️⃣ Connect to App Servers
+**Objective:** Install cronie package on all app servers, start crond service, and add a sample cron job for root user.
 
+---
+
+## 🔹 Cron Jobs Overview
+
+* **What is Cron?**
+  Cron is a time-based job scheduler in Linux that allows you to run commands or scripts automatically at specified times and intervals.
+
+* **Why Use Cron?**
+  Automates repetitive tasks like backups, system monitoring, log rotation, and maintenance without manual intervention. Essential for system administration and DevOps automation.
+
+---
+
+## 🔧 Step-by-Step Solution
+
+### App Server 1 (stapp01)
+
+#### Step 1: Connect to App Server 1
 ```bash
-ssh tony@stapp01
-ssh steve@stapp02
-ssh banner@stapp03
+# SSH into App Server 1
+ssh tony@stapp01.stratos.xfusioncorp.com
 ```
 
-### 2️⃣ Install `cronie` package
-
+#### Step 2: Switch to Root User
 ```bash
-sudo yum install -y cronie
+# Switch to root for cron management
+sudo su -
 ```
 
-### 3️⃣ Start and Enable `crond` Service
-
+#### Step 3: Install Cronie Package
 ```bash
-sudo systemctl start crond
-sudo systemctl enable crond
+# Install cronie package
+yum install -y cronie
+
+# Alternative for newer systems
+dnf install -y cronie
+```
+
+#### Step 4: Start and Enable Crond Service
+```bash
+# Start crond service
+systemctl start crond
+
+# Enable crond service to start on boot
+systemctl enable crond
+
+# Check service status
 systemctl status crond
 ```
 
-### 4️⃣ Add Cron Job for Root User
-
+#### Step 5: Add Cron Job for Root User
 ```bash
-sudo crontab -e
+# Open root's crontab
+crontab -e
+
+# Add the following line:
+# */5 * * * * echo hello > /tmp/cron_text
 ```
 
-Add the line:
-
+#### Step 6: Verify Cron Job
 ```bash
-*/5 * * * * echo hello > /tmp/cron_text
+# List current cron jobs for root
+crontab -l
+
+# Check if crond is running
+ps aux | grep crond
 ```
 
-### 5️⃣ Verify Cron Job
+### App Server 2 (stapp02)
 
+#### Step 1: Connect to App Server 2
 ```bash
-sudo crontab -l
+# SSH into App Server 2
+ssh steve@stapp02.stratos.xfusioncorp.com
 ```
 
-### 6️⃣ Wait and Check Output File (\~5 minutes)
-
+#### Step 2: Switch to Root User
 ```bash
-sudo cat /tmp/cron_text
+# Switch to root for cron management
+sudo su -
 ```
 
-### 7️⃣ Check Cron Logs (for confirmation/debugging)
-
+#### Step 3: Install Cronie Package
 ```bash
-sudo grep CRON /var/log/cron
+# Install cronie package
+yum install -y cronie
+```
+
+#### Step 4: Start and Enable Crond Service
+```bash
+# Start crond service
+systemctl start crond
+
+# Enable crond service to start on boot
+systemctl enable crond
+
+# Check service status
+systemctl status crond
+```
+
+#### Step 5: Add Cron Job for Root User
+```bash
+# Open root's crontab
+crontab -e
+
+# Add the following line:
+# */5 * * * * echo hello > /tmp/cron_text
+```
+
+#### Step 6: Verify Cron Job
+```bash
+# List current cron jobs for root
+crontab -l
+```
+
+### App Server 3 (stapp03)
+
+#### Step 1: Connect to App Server 3
+```bash
+# SSH into App Server 3
+ssh banner@stapp03.stratos.xfusioncorp.com
+```
+
+#### Step 2: Switch to Root User
+```bash
+# Switch to root for cron management
+sudo su -
+```
+
+#### Step 3: Install Cronie Package
+```bash
+# Install cronie package
+yum install -y cronie
+```
+
+#### Step 4: Start and Enable Crond Service
+```bash
+# Start crond service
+systemctl start crond
+
+# Enable crond service to start on boot
+systemctl enable crond
+
+# Check service status
+systemctl status crond
+```
+
+#### Step 5: Add Cron Job for Root User
+```bash
+# Open root's crontab
+crontab -e
+
+# Add the following line:
+# */5 * * * * echo hello > /tmp/cron_text
+```
+
+#### Step 6: Verify Cron Job
+```bash
+# List current cron jobs for root
+crontab -l
+```
+
+### Final Verification (All Servers)
+```bash
+# Wait for 5 minutes and check if file is created
+ls -la /tmp/cron_text
+
+# Check file contents
+cat /tmp/cron_text
+
+# Monitor cron logs
+tail -f /var/log/cron
 ```
 
 ---
 
-## 🔑 **Key Notes:**
+## ✅ Validation Steps
 
-↳ Cron job runs at every 5-minute interval.
-↳ `crond` must be running for jobs to execute.
-↳ Verified results via `/tmp/cron_text` and `/var/log/cron`.
-↳ No reboot required; cron auto-starts on boot.
-
----
-
-## 📝 Summary
-
-Successfully tested a **Linux cron job** that automates task execution every 5 minutes.
-This hands-on reinforced how **automation with cron** improves reliability, reduces manual effort, and is essential for **DevOps and SysAdmin workflows**.
-
-
+1. ✅ Cronie package installed on all three app servers
+2. ✅ Crond service started and enabled on all servers
+3. ✅ Cron job added for root user (runs every 5 minutes)
+4. ✅ Cron job creates /tmp/cron_text file with "hello" content
