@@ -1,88 +1,159 @@
+# 🚀 Day 3 of 100 Days of DevOps: Secure Root SSH Access
 
+## 🎯 Challenge: 100 Days of DevOps with KodeKloud
 
-# 🚀 Day 3: Secure Root SSH Access
-
-## 🔐 Overview
-
-As part of Linux server hardening, it’s a security best practice to **disable direct root SSH login**.
-Allowing root to log in directly over SSH increases the risk of brute-force attacks and unauthorized access.
-
-Instead, users should log in with a **regular account** and escalate privileges using `sudo` when administrative tasks are required.
-
-To implement this, we update the SSH daemon configuration file (`/etc/ssh/sshd_config`) and restart the SSH service.
+## 🖥️ Server Details
+| Server Name | IP Address | Hostname | User | Purpose |
+|-------------|------------|----------|------|---------|
+| stapp01 | 172.16.238.10 | stapp01.stratos.xfusioncorp.com | tony | Nautilus App 1 |
+| stapp02 | 172.16.238.11 | stapp02.stratos.xfusioncorp.com | steve | Nautilus App 2 |
+| stapp03 | 172.16.238.12 | stapp03.stratos.xfusioncorp.com | banner | Nautilus App 3 |
 
 ---
 
-## 🛠️ Steps Performed
+## 📋 Lab Overview
+**Scenario:** xFusionCorp Industries security team has rolled out new protocols following security audits, including restriction of direct root SSH login.
 
-### 1️⃣ SSH into Each App Server
+**Objective:** Disable direct SSH root login on all app servers within the Stratos Datacenter.
 
+---
+
+## 🔧 Step-by-Step Solution
+
+### App Server 1 (stapp01)
+
+#### Step 1: Connect to App Server 1
 ```bash
-# From jump host
-ssh tony@stapp01     # Password: Ir0nM@n
-ssh steve@stapp02    # Password: Am3ric@
-ssh banner@stapp03   # Password: BigGr33n
+# SSH into App Server 1
+ssh tony@stapp01.stratos.xfusioncorp.com
 ```
 
----
-
-### 2️⃣ Open SSH Configuration File
-
+#### Step 2: Switch to Root User
 ```bash
-sudo vi /etc/ssh/sshd_config
+# Switch to root for SSH configuration
+sudo su -
 ```
 
----
-
-### 3️⃣ Locate and Update Root Login Setting
-
-Find the line with `PermitRootLogin`.
-
-* If commented (`#PermitRootLogin yes`), uncomment it.
-* Update the value to **no**:
-
+#### Step 3: Edit SSH Configuration
 ```bash
-PermitRootLogin no
+# Backup original SSH config
+cp /etc/ssh/sshd_config /etc/ssh/sshd_config.bak
+
+# Edit SSH configuration file
+vi /etc/ssh/sshd_config
 ```
 
----
-
-### 4️⃣ Restart SSH Service
-
+#### Step 4: Modify Root Login Setting
 ```bash
-sudo systemctl restart sshd
+# Find and change PermitRootLogin to no
+# Change: #PermitRootLogin yes
+# To: PermitRootLogin no
 ```
 
----
-
-### 5️⃣ Verify Changes
-
-Run:
-
+#### Step 5: Restart SSH Service
 ```bash
-sudo grep -i PermitRootLogin /etc/ssh/sshd_config
+# Restart SSH service to apply changes
+systemctl restart sshd
+
+# Verify SSH service status
+systemctl status sshd
 ```
 
-✅ Expected Output:
+### App Server 2 (stapp02)
 
+#### Step 1: Connect to App Server 2
+```bash
+# SSH into App Server 2
+ssh steve@stapp02.stratos.xfusioncorp.com
 ```
-PermitRootLogin no
-# the setting of "PermitRootLogin without-password".
+
+#### Step 2: Switch to Root User
+```bash
+# Switch to root for SSH configuration
+sudo su -
+```
+
+#### Step 3: Edit SSH Configuration
+```bash
+# Backup original SSH config
+cp /etc/ssh/sshd_config /etc/ssh/sshd_config.bak
+
+# Edit SSH configuration file
+vi /etc/ssh/sshd_config
+```
+
+#### Step 4: Modify Root Login Setting
+```bash
+# Find and change PermitRootLogin to no
+# Change: #PermitRootLogin yes
+# To: PermitRootLogin no
+```
+
+#### Step 5: Restart SSH Service
+```bash
+# Restart SSH service to apply changes
+systemctl restart sshd
+
+# Verify SSH service status
+systemctl status sshd
+```
+
+### App Server 3 (stapp03)
+
+#### Step 1: Connect to App Server 3
+```bash
+# SSH into App Server 3
+ssh banner@stapp03.stratos.xfusioncorp.com
+```
+
+#### Step 2: Switch to Root User
+```bash
+# Switch to root for SSH configuration
+sudo su -
+```
+
+#### Step 3: Edit SSH Configuration
+```bash
+# Backup original SSH config
+cp /etc/ssh/sshd_config /etc/ssh/sshd_config.bak
+
+# Edit SSH configuration file
+vi /etc/ssh/sshd_config
+```
+
+#### Step 4: Modify Root Login Setting
+```bash
+# Find and change PermitRootLogin to no
+# Change: #PermitRootLogin yes
+# To: PermitRootLogin no
+```
+
+#### Step 5: Restart SSH Service
+```bash
+# Restart SSH service to apply changes
+systemctl restart sshd
+
+# Verify SSH service status
+systemctl status sshd
+```
+
+### Verification Commands (Run on each server)
+```bash
+# Check SSH configuration
+grep "PermitRootLogin" /etc/ssh/sshd_config
+
+# Test SSH service configuration
+sshd -t
+
+# Verify SSH service is running
+systemctl is-active sshd
 ```
 
 ---
 
-## ⚠️ Challenge Encountered
+## ✅ Validation Steps
 
-🔍 On **stapp02**, the SSH config file appeared empty.
-🛠️ After careful troubleshooting, I reapplied the correct configuration.
-✅ Successfully restarted the SSH service without issues.
-
----
-
-## 🎯 Outcome
-
-* Direct **root SSH login disabled** on all 3 app servers (`stapp01`, `stapp02`, `stapp03`).
-* Enhanced server security by following industry best practices.
-* Learned real-world debugging skills with SSH services.
-
+1. ✅ SSH configuration backed up on all servers
+2. ✅ PermitRootLogin set to 'no' on all servers
+3. ✅ SSH service restarted successfully on all servers
+4. ✅ Direct root SSH login disabled on all app servers
