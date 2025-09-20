@@ -59,8 +59,6 @@ ssh-copy-id tony@stapp01.stratos.xfusioncorp.com
 
 # Alternative method using IP
 ssh-copy-id tony@172.16.238.10
-
-# Enter tony's password when prompted: Ir0nM@n
 ```
 
 ### Step 4: Copy Public Key to App Server 2
@@ -70,8 +68,6 @@ ssh-copy-id steve@stapp02.stratos.xfusioncorp.com
 
 # Alternative method using IP
 ssh-copy-id steve@172.16.238.11
-
-# Enter steve's password when prompted
 ```
 
 ### Step 5: Copy Public Key to App Server 3
@@ -81,8 +77,6 @@ ssh-copy-id banner@stapp03.stratos.xfusioncorp.com
 
 # Alternative method using IP
 ssh-copy-id banner@172.16.238.12
-
-# Enter banner's password when prompted: BigGr33n
 ```
 
 ### Step 6: Test Password-less SSH Access
@@ -99,14 +93,14 @@ exit
 ssh banner@stapp03.stratos.xfusioncorp.com
 ```
 
-### Step 7: Verify SSH Configuration on Remote Servers (Optional)
+### Step 7: Verify SSH Configuration on Remote Servers
 ```bash
 # On each app server, check authorized_keys file
 cat ~/.ssh/authorized_keys
 
 # Check SSH directory permissions
 ls -la ~/.ssh/
-
+```
 
 ---
 
