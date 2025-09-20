@@ -1,112 +1,81 @@
+# 🚀 Day 4 of 100 Days of DevOps: Script Execution Permissions
 
-# 🚀 Day 4: Script Execution Permissions
+## 🎯 Challenge: 100 Days of DevOps with KodeKloud
 
-### 📌 Lab Objective
-
-Grant executable permissions to the `xfusioncorp.sh` script located in `/tmp` on **App Server 1**, ensuring that **all users** can execute it.
-
----
-
-### 📖 Understanding Script Permissions
-
-In Linux, permissions define what actions users can perform on a file:
-
-* **Read (r):** View file contents
-* **Write (w):** Modify the file
-* **Execute (x):** Run the file as a program
-
-By default, newly distributed scripts may lack execute permissions. Without them, the system cannot run the script.
-
-* `chmod a+x file` → Adds execute permission for **all users**.
-* `chmod 755 file` → A safer option: **owner has full control, group & others have read + execute**.
+## 🖥️ Server Details
+| Server Name | IP Address | Hostname | User | Purpose |
+|-------------|------------|----------|------|---------|
+| stapp01 | 172.16.238.10 | stapp01.stratos.xfusioncorp.com | tony | Nautilus App 1 |
 
 ---
 
-### 🛠️ Lab Steps
+## 📋 Lab Overview
+**Scenario:** xFusionCorp Industries sysadmin team has developed a bash script named `xfusioncorp.sh` to automate backup processes. The script lacks executable permissions on App Server 1.
 
-**1️⃣ Connect to App Server 1**
-
-```bash
-ssh tony@stapp01
-```
-
-**2️⃣ Check the script’s permissions**
-
-```bash
-ls -l /tmp/xfusioncorp.sh
-```
-
-Output:
-
-```
----------- 1 root root 40 Aug  7 09:38 /tmp/xfusioncorp.sh
-```
-
-➡️ The script had **no read, write, or execute permissions**.
+**Objective:** Grant executable permissions to `/tmp/xfusioncorp.sh` script on App Server 1 and ensure all users can execute it.
 
 ---
 
-### ❌ Error Encountered
+## 🔧 Step-by-Step Solution
 
-I tried:
-
+### Step 1: Connect to App Server 1
 ```bash
-sudo chmod a+x /tmp/xfusioncorp.sh
+# SSH into App Server 1 (stapp01 - Nautilus App 1)
+ssh tony@stapp01.stratos.xfusioncorp.com
+# OR using IP address
+ssh tony@172.16.238.10
+```
+
+### Step 2: Switch to Root User
+```bash
+# Switch to root for file permission changes
+sudo su -
+```
+
+### Step 3: Check Current Script Permissions
+```bash
+# Check current permissions of the script
+ls -la /tmp/xfusioncorp.sh
+
+# View detailed file information
+stat /tmp/xfusioncorp.sh
+```
+
+### Step 4: Grant Executable Permissions for All Users
+```bash
+# Method 1: Add execute permission for all users (owner, group, others)
+chmod +x /tmp/xfusioncorp.sh
+
+# Method 2: Set specific permissions (read and execute for all)
+chmod 755 /tmp/xfusioncorp.sh
+
+# Method 3: Using symbolic notation
+chmod a+x /tmp/xfusioncorp.sh
+```
+
+### Step 5: Verify Permissions
+```bash
+# Check updated permissions
+ls -la /tmp/xfusioncorp.sh
+
+# Verify all users can execute
+stat /tmp/xfusioncorp.sh
+```
+
+### Step 6: Test Script Execution
+```bash
+# Test script execution as current user
 /tmp/xfusioncorp.sh
-```
 
-But got:
-
-```
-/bin/bash: /tmp/xfusioncorp.sh: Permission denied
-```
-
-🔍 **Reason:**
-The script only had execute bits (`--x--x--x`) but **no read permission**, so the shell couldn’t read the file.
-
----
-
-### ✅ Fix Applied
-
-I corrected the permissions with:
-
-```bash
-sudo chmod 755 /tmp/xfusioncorp.sh
-```
-
-**Verify again:**
-
-```bash
-ls -l /tmp/xfusioncorp.sh
-```
-
-Now:
-
-```
--rwxr-xr-x 1 root root 40 Aug  7 09:38 /tmp/xfusioncorp.sh
+# Check if script runs without permission errors
+bash /tmp/xfusioncorp.sh
 ```
 
 ---
 
-### 🚀 Result
+## ✅ Validation Steps
 
-Executed successfully:
-
-```bash
-/tmp/xfusioncorp.sh
-```
-
-The script ran without errors after applying the proper permissions.
-
----
-
-### 🎯 Key Takeaways
-
-* Always check permissions with `ls -l`.
-* `chmod a+x` alone may not be enough — scripts often also need **read access**.
-* Use `chmod 755` as a standard for shared scripts.
-* Proper permission management is critical in DevOps automation.
-
----
-
-
+1. ✅ Script `/tmp/xfusioncorp.sh` exists on App Server 1
+2. ✅ Execute permissions granted for all users (owner, group, others)
+3. ✅ File permissions show executable bits set (-rwxr-xr-x)
+4. ✅ Script can be executed by all users without permission errors
