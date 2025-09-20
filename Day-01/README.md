@@ -64,14 +64,7 @@ ls -la /home/ | grep javed
 
 ---
 
-## 📖 Key Concepts Learned
-
-### Non-Interactive Shells
-- **Purpose:** Prevent users from logging into the system while allowing services/processes to run under their account
-- **Common non-interactive shells:**
-  - `/sbin/nologin` - Most common, displays message when login attempted
-  - `/bin/false` - Simply returns false, no message
-  - `/usr/sbin/nologin` - Alternative path on some systems
+#
 
 ### useradd Command Options
 - `-s` : Specify the login shell
@@ -81,16 +74,6 @@ ls -la /home/ | grep javed
 
 ---
 
-## 🛠️ Commands Reference
-
-| Command | Description |
-|---------|-------------|
-| `useradd -s /sbin/nologin javed` | Create user with non-interactive shell |
-| `id javed` | Display user and group IDs |
-| `grep javed /etc/passwd` | Check user entry in passwd file |
-| `grep nologin /etc/passwd` | List all users with nologin shell |
-
----
 
 ## ✅ Validation Steps
 
@@ -100,7 +83,3 @@ ls -la /home/ | grep javed
 4. ✅ User cannot login interactively
 
 
-
----
-
-**#100DaysOfDevOps #KodeKloud #Linux #UserManagement #DevOps**
