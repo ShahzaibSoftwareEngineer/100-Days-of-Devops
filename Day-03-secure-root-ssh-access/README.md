@@ -154,6 +154,6 @@ systemctl is-active sshd
 ## ✅ Validation Steps
 
 1. ✅ SSH configuration backed up on all servers
-2. ✅ PermitRootLogin set to 'no' on all servers
+2. ✅ PermitRootLogins set to 'no' on all servers
 3. ✅ SSH service restarted successfully on all servers
 4. ✅ Direct root SSH login disabled on all app servers
