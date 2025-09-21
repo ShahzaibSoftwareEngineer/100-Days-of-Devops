@@ -12,7 +12,7 @@
 ## 📋 Lab Overview
 **Scenario:** xFusionCorp Industries sysadmin team has developed a bash script named `xfusioncorp.sh` to automate backup processes. The script lacks executable permissions on App Server 1.
 
-**Objective:** Grant executable permissions to `/tmp/xfusioncorp.sh` script on App Server 1 and ensure all users can execute it.
+**Objective:** Grant executable permissions to `/tmp/xfusioncorp.sh` script on App Server 1 a and ensure all users can execute it.
 
 ---
 
