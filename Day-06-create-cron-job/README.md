@@ -195,5 +195,5 @@ tail -f /var/log/cron
 
 1. ✅ Cronie package installed on all three app servers
 2. ✅ Crond service started and enabled on all servers
-3. ✅ Cron job added for root user (runs every 5 minutes)
+3. ✅ Cron job added for a root user (runs every 5 minutes)
 4. ✅ Cron job creates /tmp/cron_text file with "hello" content
