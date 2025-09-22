@@ -103,11 +103,3 @@ ls -la ~/.ssh/
 ```
 
 ---
-
-## ✅ Validation Steps
-
-1. ✅ SSH key pair generated on jump host for thor user
-2. ✅ Public key copied to all three app servers
-3. ✅ Password-less SSH access working to stapp01 (tony)
-4. ✅ Password-less SSH access working to stapp02 (steve)
-5. ✅ Password-less SSH access working to stapp03 (banner)
