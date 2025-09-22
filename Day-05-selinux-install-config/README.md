@@ -20,7 +20,7 @@
 ---
 
 ## 📋 Lab Overview
-**Scenario:** xFusionCorp Industries security team has opted to enhance application and server security with SELinux following a security audit.
+**Scenario:** xFusionCorp Industries security team has opted to enhance application and server security with SELinux following a security audits.
 
 **Objective:** Install SELinux packages and permanently disable SELinux on App Server 2 for testing purposes.
 
