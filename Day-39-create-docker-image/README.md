@@ -87,7 +87,7 @@ sudo docker run -it official:xfusion bash
 ### 📌 Notes
 
 * `docker commit` is useful for **backups, snapshots, and testing**.
-* But in real DevOps workflows, we prefer **Dockerfiles** for reproducibility and automation.
+* But in the  real DevOps workflows, we prefer **Dockerfiles** for reproducibility and automation.
 * Still, this command is handy when you need to preserve ad-hoc changes made inside a container.
 
 ---
