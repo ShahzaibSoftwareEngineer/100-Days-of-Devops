@@ -18,7 +18,7 @@ Today’s lab focused on **containerizing an application** by deploying an **Ngi
 * **Docker Containers**: Lightweight, standalone, and executable packages that include everything needed to run an application.
 * **Alpine Images**: Minimal Linux distribution images, useful for small footprint containers.
 * **Restart Policies**: Ensure containers restart automatically on failure or system reboot (`--restart unless-stopped`).
-* **Container Verification**: Always verify container status (`docker ps`) and functionality (`curl`) after deployment.
+* **Container Verification**: Alway verify container status (`docker ps`) and functionality (`curl`) after deployment.
 
 ---
 
@@ -82,5 +82,5 @@ Server: nginx/1.29.1
 
 * Docker containers allow rapid deployment without affecting the host environment.
 * Using minimal images like **Alpine** reduces container size and resource usage.
-* Restart policies improve reliability in production environments.
+* Restart policies improves reliability in production environments.
 * Always verify container status and functionality post-deployment.
