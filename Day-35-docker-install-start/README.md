@@ -80,8 +80,8 @@ docker compose version
 
 ## 🔗 Resources
 
-* [Docker Official Documentation](https://docs.docker.com/get-docker/)
-* [Docker Compose Documentation](https://docs.docker.com/compose/)
+* [Docker Official Documentations](https://docs.docker.com/get-docker/)
+* [Docker Compose Documentations](https://docs.docker.com/compose/)
 
 ---
 
