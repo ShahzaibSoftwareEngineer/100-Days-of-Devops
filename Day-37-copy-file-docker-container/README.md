@@ -105,7 +105,7 @@ docker exec ubuntu_latest sha256sum /home/nautilus.txt.gpg
 1b2cde180f9e7ad23fed89d2331d6ab9afc0bbe111f7a14f687918d8405d05dd  /home/nautilus.txt.gpg
 ```
 
-✔️ The checksum matches the host’s checksum, confirming the file was transferred without any modification.
+✔️ The checksum matches the host’s checksum, confirming the file was transferred without any modification is coreect .
 
 ---
 
