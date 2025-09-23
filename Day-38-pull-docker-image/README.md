@@ -23,7 +23,7 @@ When you start a container, Docker uses the image as the foundation and creates 
 
 ### Key Points about Docker Images:
 - **Read-only:** Images cannot be changed once built.  
-- **Layered:** Built in layers for efficiency (shared layers reduce duplication).  
+- **Layered:** Built in layers for efficiency 
 - **Tagged:** Images can have tags like `busybox:musl` or `busybox:media`. Tags help identify versions.  
 - **Portable:** Can be shared via Docker Hub or private registries, making them easy to distribute across environments.  
 
