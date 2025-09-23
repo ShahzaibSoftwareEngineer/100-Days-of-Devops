@@ -47,7 +47,7 @@ ssh banner@172.16.238.12
 sudo docker ps
 ```
 
-Output example:
+Output examples:
 
 ```
 CONTAINER ID   IMAGE     COMMAND       CREATED          STATUS          NAMES
