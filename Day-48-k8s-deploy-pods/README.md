@@ -39,7 +39,7 @@ kubectl cluster-info
 kubectl get nodes
 ```
 
-### Step 3: Create Pod YAML Manifest
+### Step 3: Create  a Pod YAML Manifest
 ```bash
 vi pod-nginx.yaml
 ```
