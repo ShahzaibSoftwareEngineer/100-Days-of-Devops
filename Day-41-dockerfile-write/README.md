@@ -17,7 +17,7 @@ Key concepts covered in this lab:
 * Modifying configuration files (`ports.conf`, `000-default.conf`)
 * Exposing ports for container access
 * Running processes in the foreground for container compatibility
-* Following best practices for lightweight, maintainable images
+* Following best practice for lightweight, maintainable images
 
 ---
 
