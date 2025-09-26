@@ -13,7 +13,7 @@ Port mapping connects a port on the host to a port inside the container, letting
 ---
 
 ## 📋 Lab Task
-Deploy an nginx web server in a Docker container with proper port mapping configuration on Application Server 1.
+Deploy an nginx web server is  a Docker container with proper port mapping configuration on Application Server 1.
 
 ## 🎯 Lab Requirements
 - Pull the `nginx:stable` Docker image from Docker Hub
@@ -62,7 +62,7 @@ docker port blog
 **`docker run -d --name blog -p 8085:80 nginx:stable`**
 - `docker run` → Creates and starts a new container
 - `-d` → Detached mode (runs in background)
-- `--name blog` → Assigns friendly name "blog" to the container
+- `--name blog` → Assigns  a friendly name "blog" to the container
 - `-p 8085:80` → Port mapping (host:container format)
 - `nginx:stable` → Specifies the image to use
 
