@@ -23,7 +23,7 @@
 ## 🔍 Docker Networking 
 
 ### What is Docker Networking?
-Docker networking enables communication between containers, between containers and the host, and between containers and external networks. It provides isolation, security, and flexibility for containerized applications.
+Docker networking enables communication between containers, between containers and the host, and between containers and external networks. It provides isolation, security, and flexibility for containerized application.
 
 ### Key Networking Concepts:
 
