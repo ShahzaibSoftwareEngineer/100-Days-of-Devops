@@ -5,7 +5,7 @@
 A **Dockerfile** is a text file containing a series of instructions used to build Docker images automatically. Each instruction in a Dockerfile creates a layer in the image, making it efficient and cacheable.
 
 ### Key Dockerfile Instructions:
-- **FROM**: Specifies the base image
+- **FROM**: Specifie the base image
 - **RUN**: Executes commands during build time
 - **COPY/ADD**: Copies files from host to container
 - **EXPOSE**: Documents which ports the container will use
@@ -13,7 +13,7 @@ A **Dockerfile** is a text file containing a series of instructions used to buil
 
 ### Common Dockerfile Issues:
 1. **Case Sensitivity**: Docker instructions must be UPPERCASE
-2. **File Path Errors**: Incorrect source/destination paths
+2. **File Path Error**: Incorrect source/destination paths
 3. **Syntax Errors**: Missing quotes, brackets, or incorrect formatting
 4. **Missing Dependencies**: Required files or packages not available
 5. **Layer Optimization**: Inefficient layering causing large images
