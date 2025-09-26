@@ -17,7 +17,7 @@ Deploy a static website using Apache HTTP server with Docker Compose on App Serv
 **Docker Compose** is a tool for defining and running multi-container applications using a YAML file instead of multiple `docker run` commands.
 
 ### Why Docker Compose?
-- **Single Command**: `docker-compose up` vs multiple docker run commands
+- **Single Command**: `docker-compose up command ` vs multiple docker run commands
 - **Reproducible**: Same environment everywhere
 - **Easy Management**: Start, stop, scale services together
 
