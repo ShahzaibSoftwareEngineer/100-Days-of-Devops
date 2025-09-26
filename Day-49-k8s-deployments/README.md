@@ -6,7 +6,7 @@
 A **Deployment** is a Kubernetes resource that provides declarative updates for Pods and ReplicaSets. It's the recommended way to manage stateless applications in Kubernetes.
 
 **Core Functions:**
-- **Pod Management**: Creates and manages identical pods
+- **Pod Management**: Creates a pod  and manages identical pods
 - **Desired State**: Ensures specified number of replicas are always running
 - **Rolling Updates**: Updates applications without downtime
 - **Rollback**: Reverts to previous versions if issues occur
