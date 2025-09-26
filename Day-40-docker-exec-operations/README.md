@@ -12,7 +12,7 @@ It allows us to **run processes inside a running container** without stopping or
 * **Difference from `docker run`**:
 
   * `docker run` → Creates and starts a new container from an image.
-  * `docker exec` → Runs commands inside an existing container.
+  * `docker exec` → Runs a  commands inside an existing container.
 * **Interactive Mode (`-it`)**:
   Using `-it` allows us to interact with the container shell, just like logging into a VM.
 * **Practical Uses**:
