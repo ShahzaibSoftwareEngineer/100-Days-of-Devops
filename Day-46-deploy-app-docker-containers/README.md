@@ -4,8 +4,8 @@
 ## 🎯 Objective
 The goal of this lab is to deploy a multi-container application stack using **Docker Compose**.  
 We run:
-- **MariaDB (mysql_host)** → for database backend  
-- **PHP + Apache (php_host)** → for web frontend  
+- **MariaDB (mysql_host)** → for the  database backend  
+- **PHP + Apache (php_host)** → for the web frontend  
 
 ---
 
