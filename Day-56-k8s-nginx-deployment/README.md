@@ -1,14 +1,15 @@
 # Day 56: Deploy Nginx Web Server on Kubernetes Cluster
 
-📋 Challenge Overview
+## 📋 Challenge Overview
 Today's task involved deploying a highly available and scalable Nginx web server on a Kubernetes cluster for the Nautilus development team's static website.
-🎯 Requirements Met
 
-✅ Deployment: Created nginx-deployment with nginx:latest image
-✅ Replicas: Configured 3 replicas for high availability
-✅ Container: Named container as nginx-container
-✅ Service: Created NodePort service nginx-service on port 30011
-✅ Scalability: Ready for horizontal scaling
+## 🎯 Requirements Met
+
+✅ **Deployment**: Created nginx-deployment with nginx:latest image  
+✅ **Replicas**: Configured 3 replicas for high availability  
+✅ **Container**: Named container as nginx-container  
+✅ **Service**: Created NodePort service nginx-service on port 30011  
+✅ **Scalability**: Ready for horizontal scaling  
 
 ## Step-by-Step Implementation
 
@@ -113,20 +114,18 @@ kubectl get services
 
 # Get detailed service information
 kubectl describe service nginx-service
-``
+```
 
+## 📊 Results Achieved 
 
+- **High Availability**: 3 running replicas across cluster nodes
+- **External Access**: Service accessible via NodePort 30011
+- **Load Balancing**: Traffic distributed automatically across pods
+- **Scalability**: Ready for horizontal pod autoscaling
 
-📊 Results Achieved 
+## 🌟 Key Learnings
 
-High Availability: 3 running replicas across cluster nodes
-External Access: Service accessible via NodePort 30011
-Load Balancing: Traffic distributed automatically across pods
-Scalability: Ready for horizontal pod autoscaling
-
-🌟 Key Learnings
-
-Kubernetes Deployments provide declarative application management
-NodePort Services enable external cluster access
-Multi-replica deployments ensure high availability and fault tolerance
-Label selectors create loose coupling between deployments and services
+- **Kubernetes Deployments** provide declarative application management
+- **NodePort Services** enable external cluster access
+- **Multi-replica deployments** ensure high availability and fault tolerance
+- **Label selectors** create loose coupling between deployments and services
