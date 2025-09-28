@@ -116,25 +116,7 @@ kubectl describe service nginx-service
 ``
 
 
-## Expected Output
 
-After successful deployment, you should see:
-
-**Deployments:**
-```
-NAME               READY   UP-TO-DATE   AVAILABLE   AGE
-nginx-deployment   3/3     3            3           2m
-```
-
-**Pods:**
-```
-NAME                                READY   STATUS    RESTARTS   AGE
-nginx-deployment-xxxxxxxxx-xxxxx    1/1     Running   0          2m
-nginx-deployment-xxxxxxxxx-xxxxx    1/1     Running   0          2m
-nginx-deployment-xxxxxxxxx-xxxxx    1/1     Running   0          2m
-
-
-```
 📊 Results Achieved 
 
 High Availability: 3 running replicas across cluster nodes
