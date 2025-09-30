@@ -5,7 +5,7 @@ Today's challenge involved deploying Grafana, a powerful analytics and monitorin
 
 
 ## 🎯 Objectives 
-- Create a Kubernetes Deployment for Grafana
+-
 - Create a Kubernetes Deployment for Grafana
 - Expose Grafana using a NodePort service on port 32000
 - Ensure accessibility to the Grafana login page
@@ -127,18 +127,6 @@ deployment.apps/grafana-deployment-datacenter created
 service/grafana-service-datacenter created
 ```
 
-### Running Resources
-```bash
-$ kubectl get all
-NAME                                               READY   STATUS    RESTARTS   AGE
-pod/grafana-deployment-datacenter-xxxxxxxxx-xxxxx   1/1     Running   0          2m
-
-NAME                                 TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE
-service/grafana-service-datacenter   NodePort    10.96.xxx.xxx   <none>        3000:32000/TCP   2m
-
-NAME                                            READY   UP-TO-DATE   AVAILABLE   AGE
-deployment.apps/grafana-deployment-datacenter   1/1     1            1           2m
-```
 
 ## 🔑 Key Learnings
 
