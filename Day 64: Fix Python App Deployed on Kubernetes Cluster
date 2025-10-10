@@ -275,13 +275,3 @@ kubectl get pods -l app=python_app
 # Test
 curl http://kodekloud-control-plane:32345
 ```
-
-## 📝 Lab Summary
-
-**Root Cause**: Service port misconfiguration - service was listening on port 8080 while the Flask application was running on port 5000.
-
-**Fix Applied**: Updated service configuration to use port 5000 for both `port` and `targetPort` fields.
-
-**Result**: Application now accessible on `http://<NODE_IP>:32345` ✅
-
----
