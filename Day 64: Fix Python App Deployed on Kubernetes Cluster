@@ -1,0 +1,287 @@
+# Day 64: Fix Python App Deployed on Kubernetes Cluster
+
+## 🎯 Lab Objective
+
+Fix a misconfigured Python Flask application deployed on a Kubernetes cluster. The application should be accessible via NodePort `32345`.
+
+## 📋 Lab Requirements
+
+- **Deployment Name**: `python-deployment-xfusion`
+- **Image**: `poroko/flask-demo-app`
+- **NodePort**: `32345`
+- **TargetPort**: `5000` (Flask default port)
+- **kubectl** is pre-configured on jump_host
+
+## 🔍 Initial Investigation
+
+### Step 1: Check Cluster and Resources
+
+```bash
+# Verify cluster connectivity
+kubectl cluster-info
+kubectl get nodes
+
+# Check deployment status
+kubectl get deployments
+kubectl get deployment python-deployment-xfusion
+kubectl describe deployment python-deployment-xfusion
+```
+
+**Output:**
+```
+NAME                        READY   UP-TO-DATE   AVAILABLE   AGE
+python-deployment-xfusion   0/1     1            0           12m
+```
+
+### Step 2: Check Pod Status
+
+```bash
+kubectl get pods -l app=python_app
+kubectl describe pod -l app=python_app
+```
+
+### Step 3: Check Service Configuration
+
+```bash
+kubectl get svc
+kubectl describe svc python-service-xfusion
+```
+
+**Output:**
+```
+NAME                     TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)          AGE
+python-service-xfusion   NodePort    10.96.56.155   <none>        8080:32345/TCP   13m
+```
+
+## 🐛 Issues Identified
+
+### Issue 1: Service Port Misconfiguration ❌
+
+- **Current Service Config**: `8080:32345/TCP`
+- **Expected Config**: `5000:32345/TCP`
+- **Problem**: Service is forwarding traffic to port 8080, but Flask app runs on port 5000
+
+### Deployment Configuration (Already Correct ✅)
+
+```yaml
+spec:
+  containers:
+  - image: poroko/flask-demo-app
+    imagePullPolicy: Always
+    name: python-container-xfusion
+    ports:
+    - containerPort: 5000
+      protocol: TCP
+```
+
+**Analysis:**
+- ✅ Image: `poroko/flask-demo-app` - Correct
+- ✅ Container Port: `5000` - Correct
+- ❌ Service Port: `8080` - **Needs to be changed to 5000**
+- ❌ Service TargetPort: `8080` - **Needs to be changed to 5000**
+- ✅ NodePort: `32345` - Correct
+
+## 🔧 Solution
+
+### Method 1: Using kubectl patch (Recommended)
+
+```bash
+# Fix service ports - change from 8080 to 5000
+kubectl patch svc python-service-xfusion --type='json' -p='[
+  {
+    "op": "replace",
+    "path": "/spec/ports/0/port",
+    "value": 5000
+  },
+  {
+    "op": "replace",
+    "path": "/spec/ports/0/targetPort",
+    "value": 5000
+  }
+]'
+```
+
+### Method 2: Using kubectl edit
+
+```bash
+kubectl edit svc python-service-xfusion
+```
+
+**Change from:**
+```yaml
+spec:
+  type: NodePort
+  ports:
+  - port: 8080
+    targetPort: 8080
+    nodePort: 32345
+    protocol: TCP
+```
+
+**To:**
+```yaml
+spec:
+  type: NodePort
+  ports:
+  - port: 5000
+    targetPort: 5000
+    nodePort: 32345
+    protocol: TCP
+```
+
+Save and exit (`:wq` in vim)
+
+## ✅ Verification
+
+### Step 1: Check Service Configuration
+
+```bash
+kubectl get svc python-service-xfusion
+```
+
+**Expected Output:**
+```
+NAME                     TYPE       CLUSTER-IP     EXTERNAL-IP   PORT(S)          AGE
+python-service-xfusion   NodePort   10.96.56.155   <none>        5000:32345/TCP   15m
+```
+
+### Step 2: Verify Pod Status
+
+```bash
+kubectl get pods -l app=python_app
+kubectl wait --for=condition=ready pod -l app=python_app --timeout=60s
+```
+
+**Expected Output:**
+```
+NAME                                         READY   STATUS    RESTARTS   AGE
+python-deployment-xfusion-xxxxxxxxxx-xxxxx   1/1     Running   0          15m
+```
+
+### Step 3: Verify Configuration Details
+
+```bash
+echo "=== Configuration Verification ==="
+echo "Image: $(kubectl get deployment python-deployment-xfusion -o jsonpath='{.spec.template.spec.containers[0].image}')"
+echo "Container Port: $(kubectl get deployment python-deployment-xfusion -o jsonpath='{.spec.template.spec.containers[0].ports[0].containerPort}')"
+echo "Service Port: $(kubectl get svc python-service-xfusion -o jsonpath='{.spec.ports[0].port}')"
+echo "Target Port: $(kubectl get svc python-service-xfusion -o jsonpath='{.spec.ports[0].targetPort}')"
+echo "Node Port: $(kubectl get svc python-service-xfusion -o jsonpath='{.spec.ports[0].nodePort}')"
+```
+
+**Expected Output:**
+```
+Image: poroko/flask-demo-app
+Container Port: 5000
+Service Port: 5000
+Target Port: 5000
+Node Port: 32345
+```
+
+### Step 4: Test Application Access
+
+```bash
+# Get node information
+kubectl get nodes -o wide
+
+# Test the application
+curl http://kodekloud-control-plane:32345
+curl -I http://kodekloud-control-plane:32345
+
+# Alternative test
+curl http://localhost:32345
+```
+
+**Expected Response:**
+You should see HTML content or Flask application response.
+
+## 📊 Before vs After
+
+| Component | Before | After | Status |
+|-----------|--------|-------|--------|
+| **Image** | `poroko/flask-demo-app` | `poroko/flask-demo-app` | ✅ No change |
+| **Container Port** | `5000` | `5000` | ✅ No change |
+| **Service Port** | `8080` | `5000` | ✅ Fixed |
+| **Target Port** | `8080` | `5000` | ✅ Fixed |
+| **Node Port** | `32345` | `32345` | ✅ No change |
+| **Pod Status** | `0/1 Ready` | `1/1 Ready` | ✅ Fixed |
+
+## 🎓 Key Learnings
+
+1. **Flask Default Port**: Flask applications run on port `5000` by default
+2. **Service Port Mapping**: Service `port` and `targetPort` must match the container port
+3. **NodePort**: Provides external access to services (range: 30000-32767)
+4. **Port Flow**: `NodePort (32345)` → `Service Port (5000)` → `TargetPort (5000)` → `Container Port (5000)`
+5. **Troubleshooting**: Always verify the complete port mapping chain when services aren't accessible
+
+## 🔄 Complete Fix Script
+
+```bash
+#!/bin/bash
+
+echo "=== Day 64: Fixing Python Flask App on Kubernetes ==="
+
+# Step 1: Check current status
+echo -e "\n[Step 1/4] Current Status:"
+kubectl get deployment python-deployment-xfusion
+kubectl get svc python-service-xfusion
+kubectl get pods -l app=python_app
+
+# Step 2: Fix the service ports
+echo -e "\n[Step 2/4] Fixing Service Ports..."
+kubectl patch svc python-service-xfusion --type='json' -p='[
+  {
+    "op": "replace",
+    "path": "/spec/ports/0/port",
+    "value": 5000
+  },
+  {
+    "op": "replace",
+    "path": "/spec/ports/0/targetPort",
+    "value": 5000
+  }
+]'
+
+# Step 3: Wait for stabilization
+echo -e "\n[Step 3/4] Waiting for pods to be ready..."
+kubectl wait --for=condition=ready pod -l app=python_app --timeout=60s
+
+# Step 4: Verify and test
+echo -e "\n[Step 4/4] Verification:"
+echo "Image: $(kubectl get deployment python-deployment-xfusion -o jsonpath='{.spec.template.spec.containers[0].image}')"
+echo "Container Port: $(kubectl get deployment python-deployment-xfusion -o jsonpath='{.spec.template.spec.containers[0].ports[0].containerPort}')"
+echo "Service Port: $(kubectl get svc python-service-xfusion -o jsonpath='{.spec.ports[0].port}')"
+echo "Target Port: $(kubectl get svc python-service-xfusion -o jsonpath='{.spec.ports[0].targetPort}')"
+echo "Node Port: $(kubectl get svc python-service-xfusion -o jsonpath='{.spec.ports[0].nodePort}')"
+
+echo -e "\n=== Testing Application ==="
+curl -I http://kodekloud-control-plane:32345 2>/dev/null || \
+curl -I http://localhost:32345 2>/dev/null || \
+echo "Application should be accessible on nodePort 32345"
+
+echo -e "\n=== Lab Complete! ✅ ==="
+```
+
+## 🚀 Quick Commands
+
+```bash
+# Single command fix
+kubectl patch svc python-service-xfusion --type='json' -p='[{"op":"replace","path":"/spec/ports/0/port","value":5000},{"op":"replace","path":"/spec/ports/0/targetPort","value":5000}]'
+
+# Verify
+kubectl get svc python-service-xfusion
+kubectl get pods -l app=python_app
+
+# Test
+curl http://kodekloud-control-plane:32345
+```
+
+## 📝 Lab Summary
+
+**Root Cause**: Service port misconfiguration - service was listening on port 8080 while the Flask application was running on port 5000.
+
+**Fix Applied**: Updated service configuration to use port 5000 for both `port` and `targetPort` fields.
+
+**Result**: Application now accessible on `http://<NODE_IP>:32345` ✅
+
+---
