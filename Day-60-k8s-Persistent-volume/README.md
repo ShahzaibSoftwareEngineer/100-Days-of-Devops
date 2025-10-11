@@ -6,9 +6,9 @@
 This repository provides a comprehensive guide to understanding and implementing Persistent Volumes (PV) and Persistent Volume Claims (PVC) in Kubernetes.
 
 ### What You'll Learn
-- ✅ Kubernetes storage fundamentals
+- ✅ Kubernetes storage  and fundamentals
 - ✅ PersistentVolume (PV) and PersistentVolumeClaim (PVC) concepts
-- ✅ Storage Classes and dynamic provisioning
+- ✅ Storage Classes a dynamic provisioning
 - ✅ Different volume types and access modes
 - ✅ Real-world deployment scenarios
 
