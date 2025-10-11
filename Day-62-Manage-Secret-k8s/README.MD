@@ -5,7 +5,7 @@
 Secrets store sensitive data like passwords, tokens, and license keys in Kubernetes. Data is base64 encoded and kept separate from application code.
 
 **Why Use Secrets?**
-- Store sensitive information securely
+- Store sensitive information and securely
 - Separate secrets from application configuration
 - Easy to update without rebuilding images
 - Mount as files or use as environment variables
