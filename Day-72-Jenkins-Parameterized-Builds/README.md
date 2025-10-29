@@ -1,9 +1,5 @@
 
-📄 **`Day72-Jenkins-Parameterized-Builds.md`**
 
----
-
-````markdown
 # 🚀 Day 72: Jenkins Parameterized Builds  
 
 ## 🧠 Overview  
