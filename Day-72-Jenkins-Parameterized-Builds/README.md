@@ -1,5 +1,3 @@
-Here’s a **complete GitHub README-style file** (formatted perfectly for VS Code and GitHub).
-You can copy and save it as:
 
 📄 **`Day72-Jenkins-Parameterized-Builds.md`**
 
