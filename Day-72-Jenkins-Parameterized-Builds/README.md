@@ -90,22 +90,3 @@ This will print out the parameters entered during the build.
 4. Click **Build**
 
 ---
-
-### 7️⃣ Verify the Console Output
-
-Go to **Build History → Console Output** and confirm the results:
-
-```bash
-Started by user admin
-Running as SYSTEM
-Building in workspace /var/lib/jenkins/workspace/parameterized-job
-[parameterized-job] $ /bin/sh -xe /tmp/jenkinsXXXXXX.sh
-+ echo Stage: Build
-Stage: Build
-+ echo Env: Staging
-Env: Staging
-Finished: SUCCESS
-```
-
-
----
