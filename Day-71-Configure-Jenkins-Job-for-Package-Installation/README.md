@@ -9,7 +9,7 @@ A Jenkins job named `install-packages` that:
 - Takes a package name as input parameter
 - Connects to a remote storage server via SSH
 - Automatically installs the specified package
-- Works reliably across multiple executions
+- Works reliably across multiple is  executions
 
 ## 🛠️ Implementation Steps
 
