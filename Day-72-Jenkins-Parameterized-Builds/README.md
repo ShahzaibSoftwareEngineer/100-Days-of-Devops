@@ -75,7 +75,7 @@ echo "Stage: $Stage"
 echo "Env: $env"
 ```
 
-This will print out the parameters entered during the build.
+This will print out the parameters entered during on the build.
 
 ---
 
